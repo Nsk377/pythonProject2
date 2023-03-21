@@ -1,0 +1,41 @@
+{% load menu_tags %}
+
+{% draw_menu 'main_menu' %}
+
+<ul>
+{% for top_level_item in menu_items %}
+    {% if top_level_item.active %}
+    <li class="active">
+    {% else %}
+    <li>
+    {% endif %}
+        <a href="{{ top_level_item.menu_item.url }}">{{ top_level_item.menu_item.text }}</a>
+        {% if top_level_item.children %}
+        <ul>
+        {% for child_item in top_level_item.children %}
+            {% if child_item.active %}
+            <li class="active">
+            {% else %}
+            <li>
+            {% endif %}
+                <a href="{{ child_item.menu_item.url }}">{{ child_item.menu_item.text }}</a>
+                {% if child_item.children %}
+                <ul>
+                {% for grandchild_item in child_item.children %}
+                    {% if grandchild_item.active %}
+                    <li class="active">
+                    {% else %}
+                    <li>
+                    {% endif %}
+                        <a href="{{ grandchild_item.menu_item.url }}">{{ grandchild_item.menu_item.text }}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
